@@ -37,6 +37,7 @@ class LoopPageController implements Listenable {
       {int initialPage = 0,
       bool keepPage = true,
       double viewportFraction = 1.0,
+      PageController? pageController,
       LoopScrollMode scrollMode = LoopScrollMode.shortest,
       LoopActivationMode activationMode = LoopActivationMode.immediate})
       : assert(viewportFraction > 0.0),
@@ -49,12 +50,15 @@ class LoopPageController implements Listenable {
         initialPage = initialPage,
         scrollMode = scrollMode,
         _activationMode = activationMode,
-        _pageController = PageController(
-          initialPage: initialPage +
-              (activationMode == LoopActivationMode.immediate ? 1000000 : 0),
-          keepPage: keepPage,
-          viewportFraction: viewportFraction,
-        );
+        _pageController = pageController ??
+            PageController(
+              initialPage: initialPage +
+                  (activationMode == LoopActivationMode.immediate
+                      ? 1000000
+                      : 0),
+              keepPage: keepPage,
+              viewportFraction: viewportFraction,
+            );
 
   bool get hasClients => _pageController.hasClients;
 
